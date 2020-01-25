@@ -54,8 +54,8 @@ window.renderStatistics = function (ctx, names, times) {
     //  генерируем функция округления времени
     var roundTimes = [];
     var getRoundTimes = function () {
-      for (var i = 0; i < times.length; i++) {
-        roundTimes[i] = Math.round(times[i]);
+      for (var j = 0; j < times.length; j++) {
+        roundTimes[j] = Math.round(times[j]);
       }
       return roundTimes;
     };
