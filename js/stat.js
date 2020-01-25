@@ -9,9 +9,18 @@ var BAR_WIDTH = 40;
 var BAR_SPACE = 50;
 var FONT_GAP = 16;
 var MAX_BAR_HEIGHT = 150;
-var COLOR_PALITRA = ['rgba(0, 0, 0, 0.7)', '#fff', '#000', 'rgba(255, 0, 0, 1)'];
-var getBarPositionOnX = function (i) {
-  return CLOUD_X + BAR_SPACE + (BAR_SPACE + BAR_WIDTH) * i;
+var GRETTING_GAPS_X = CLOUD_X + GAPS * 3;
+var GRETTING_GAPS_Y = CLOUD_Y + GAPS * 3;
+var COLOR_PALITRA = {
+  SHADOW: 'rgba(0, 0, 0, 0.7)',
+  WHITE: '#fff',
+  BLACK: '#000',
+  RED: 'rgba(255, 0, 0, 1)'
+};
+var shodowCloudX = CLOUD_X + GAPS;
+var shodowCloudY = CLOUD_Y + GAPS;
+var getBarPositionOnX = function (numberBar) {
+  return CLOUD_X + BAR_SPACE + (BAR_SPACE + BAR_WIDTH) * numberBar;
 };
 var getNamesPositionOnY = function () {
   return CLOUD_Y + GAPS * 6 + FONT_GAP * 2 + MAX_BAR_HEIGHT;
@@ -21,6 +30,9 @@ var getBarPositionOnY = function () {
 };
 var getSocersPositionOnY = function (arr, maxTime) {
   return CLOUD_Y + GAPS * 5 + FONT_GAP + MAX_BAR_HEIGHT - (MAX_BAR_HEIGHT * arr) / maxTime;
+};
+var getCorrectHeightBar = function (arr, maxTime) {
+  return -(MAX_BAR_HEIGHT * arr) / maxTime;
 };
 //  определяем функцию генерации облака
 var renderCloud = function (ctx, x, y, color) {
@@ -35,31 +47,34 @@ var getMaxElement = function (arr) {
 var getRandom = function () {
   return Math.round(Math.random() * 100);
 };
+// определяем функцию генерации графика статистики
+var buildGraph = function (ctx, arr1, arr2, numberOfBar) {
+  ctx.fillStyle = COLOR_PALITRA.BLACK;
+  ctx.fillText(arr1, getBarPositionOnX(numberOfBar), getNamesPositionOnY());
+  if (arr1 === 'Вы') {
+    ctx.fillStyle = COLOR_PALITRA.RED;
+  } else {
+    ctx.fillStyle = 'hsl(240,  ' + getRandom() + '%, 46%)';
+  }
+  var maxTime = getMaxElement(arr2);
+  ctx.fillRect(getBarPositionOnX(numberOfBar), getBarPositionOnY(), BAR_WIDTH, getCorrectHeightBar(arr2[numberOfBar], maxTime));
+  //  выводим огругленные результаты
+  ctx.fillStyle = COLOR_PALITRA.BLACK;
+  var roundTimes = arr2.map(Math.round);
+  ctx.fillText(roundTimes[numberOfBar], getBarPositionOnX(numberOfBar), getSocersPositionOnY(arr2[numberOfBar], maxTime));
+};
 //  запуск генерации окна статистики
 window.renderStatistics = function (ctx, names, times) {
   //  определяем фон
-  renderCloud(ctx, CLOUD_X + GAPS, CLOUD_Y + GAPS, COLOR_PALITRA[0]);
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, COLOR_PALITRA[1]);
+  renderCloud(ctx, shodowCloudX, shodowCloudY, COLOR_PALITRA.SHADOW);
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, COLOR_PALITRA.WHITE);
   //  определяем положение вступительного приветсвия
-  ctx.fillStyle = COLOR_PALITRA[2];
+  ctx.fillStyle = COLOR_PALITRA.BLACK;
   ctx.font = '16px PT Mono';
-  ctx.fillText('Ура вы победили!', CLOUD_X + GAPS * 3, CLOUD_Y + GAPS * 3);
-  ctx.fillText('Список результатов:', CLOUD_X + GAPS * 3, CLOUD_Y + GAPS * 3 + FONT_GAP);
-  //  генерируем график. с данными игры
+  ctx.fillText('Ура вы победили!', GRETTING_GAPS_X, GRETTING_GAPS_Y);
+  ctx.fillText('Список результатов:', GRETTING_GAPS_X, GRETTING_GAPS_Y + FONT_GAP);
+  //  генерируем график с данными игры
   for (var i = 0; i < times.length; i++) {
-    ctx.fillStyle = COLOR_PALITRA[2];
-    ctx.fillText(names[i], getBarPositionOnX(i), getNamesPositionOnY());
-    if (names[i] === 'Вы') {
-      ctx.fillStyle = COLOR_PALITRA[3];
-    } else {
-      ctx.fillStyle = 'hsl(240,  ' + getRandom() + '%, 46%)';
-    }
-    var maxTime = getMaxElement(times);
-    ctx.fillRect(getBarPositionOnX(i), getBarPositionOnY(), BAR_WIDTH, -(MAX_BAR_HEIGHT * times[i]) / maxTime);
-    //  выводим огругленные результаты
-    ctx.fillStyle = COLOR_PALITRA[2];
-    var roundTimes = times.map(Math.round);
-    ctx.fillText(roundTimes[i], getBarPositionOnX(i), getSocersPositionOnY(times[i], maxTime));
-
+    this.buildGraph(ctx, names[i], times, i);
   }
 };
