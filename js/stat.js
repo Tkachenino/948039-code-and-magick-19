@@ -75,6 +75,6 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Список результатов:', GRETTING_GAPS_X, GRETTING_GAPS_Y + FONT_GAP);
   //  генерируем график с данными игры
   for (var i = 0; i < times.length; i++) {
-    this.buildGraph(ctx, names[i], times, i);
+    buildGraph(ctx, names[i], times, i);
   }
 };
