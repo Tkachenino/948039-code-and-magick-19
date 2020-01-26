@@ -6,28 +6,14 @@ var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
 var getRandom = function (arr) {
   return Math.round(Math.random() * (arr.length - 1));
 };
-var wizards = [
-  {
+var wizards = [];
+for (var i = 0; i < 4; i++) {
+  wizards[i] = {
     name: wizardName[getRandom(wizardName)] + '\t' + wizardSurname[getRandom(wizardSurname)],
     coatColor: coatColor[getRandom(coatColor)],
     eyesColor: eyesColor[getRandom(eyesColor)]
-  },
-  {
-    name: wizardName[getRandom(wizardName)] + '\t' + wizardSurname[getRandom(wizardSurname)],
-    coatColor: coatColor[getRandom(coatColor)],
-    eyesColor: eyesColor[getRandom(eyesColor)]
-  },
-  {
-    name: wizardName[getRandom(wizardName)] + '\t' + wizardSurname[getRandom(wizardSurname)],
-    coatColor: coatColor[getRandom(coatColor)],
-    eyesColor: eyesColor[getRandom(eyesColor)]
-  },
-  {
-    name: wizardName[getRandom(wizardName)] + '\t' + wizardSurname[getRandom(wizardSurname)],
-    coatColor: coatColor[getRandom(coatColor)],
-    eyesColor: eyesColor[getRandom(eyesColor)]
-  }
-];
+  };
+}
 
 document.querySelector('.setup').classList.remove('hidden');
 
@@ -43,8 +29,8 @@ var renderWizard = function (wizard) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
+for (var j = 0; i < wizards.length; j++) {
+  fragment.appendChild(renderWizard(wizards[j]));
 }
 
 similarListElement.appendChild(fragment);
