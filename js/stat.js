@@ -12,10 +12,10 @@ var MAX_BAR_HEIGHT = 150;
 var GRETTING_GAPS_X = CLOUD_X + GAPS * 3;
 var GRETTING_GAPS_Y = CLOUD_Y + GAPS * 3;
 var COLOR_PALITRA = {
-  SHADOW: 'rgba(0, 0, 0, 0.7)',
-  WHITE: '#fff',
-  BLACK: '#000',
-  RED: 'rgba(255, 0, 0, 1)'
+  shadow: 'rgba(0, 0, 0, 0.7)',
+  white: '#fff',
+  black: '#000',
+  red: 'rgba(255, 0, 0, 1)'
 };
 var shodowCloudX = CLOUD_X + GAPS;
 var shodowCloudY = CLOUD_Y + GAPS;
@@ -49,27 +49,27 @@ var getRandom = function () {
 };
 // определяем функцию генерации графика статистики
 var buildGraph = function (ctx, nameOfPlayer, timesArray, index) {
-  ctx.fillStyle = COLOR_PALITRA.BLACK;
+  ctx.fillStyle = COLOR_PALITRA.black;
   ctx.fillText(nameOfPlayer, getBarPositionOnX(index), getNamesPositionOnY());
   if (nameOfPlayer === 'Вы') {
-    ctx.fillStyle = COLOR_PALITRA.RED;
+    ctx.fillStyle = COLOR_PALITRA.red;
   } else {
     ctx.fillStyle = 'hsl(240,  ' + getRandom() + '%, 46%)';
   }
   var maxTime = getMaxElement(timesArray);
   ctx.fillRect(getBarPositionOnX(index), getBarPositionOnY(), BAR_WIDTH, getCorrectHeightBar(timesArray[index], maxTime));
   //  выводим огругленные результаты
-  ctx.fillStyle = COLOR_PALITRA.BLACK;
+  ctx.fillStyle = COLOR_PALITRA.black;
   var roundTimes = timesArray.map(Math.round);
   ctx.fillText(roundTimes[index], getBarPositionOnX(index), getSocersPositionOnY(timesArray[index], maxTime));
 };
 //  запуск генерации окна статистики
 window.renderStatistics = function (ctx, names, times) {
   //  определяем фон
-  renderCloud(ctx, shodowCloudX, shodowCloudY, COLOR_PALITRA.SHADOW);
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, COLOR_PALITRA.WHITE);
+  renderCloud(ctx, shodowCloudX, shodowCloudY, COLOR_PALITRA.shadow);
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, COLOR_PALITRA.white);
   //  определяем положение вступительного приветсвия
-  ctx.fillStyle = COLOR_PALITRA.BLACK;
+  ctx.fillStyle = COLOR_PALITRA.black;
   ctx.font = '16px PT Mono';
   ctx.fillText('Ура вы победили!', GRETTING_GAPS_X, GRETTING_GAPS_Y);
   ctx.fillText('Список результатов:', GRETTING_GAPS_X, GRETTING_GAPS_Y + FONT_GAP);
