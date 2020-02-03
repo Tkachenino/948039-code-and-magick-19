@@ -3,17 +3,17 @@ var wizardName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кр
 var wizardSurname = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
-// var fierballColor = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var fierballColor = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var MIN_NAME_LENGTH = 2;
-var getRandom = function (arr) {
+var getRandomFromArr = function (arr) {
   return Math.round(Math.random() * (arr.length - 1));
 };
 var NUMBER_OF_WIZARDS = 4;
 var wizards = [];
 var buildSettingWizard = function (arr) {
-  arr.push({name: wizardName[getRandom(wizardName)] + '\t' + wizardSurname[getRandom(wizardSurname)],
-    coatColor: coatColor[getRandom(coatColor)],
-    eyesColor: eyesColor[getRandom(eyesColor)]
+  arr.push({name: wizardName[getRandomFromArr(wizardName)] + '\t' + wizardSurname[getRandomFromArr(wizardSurname)],
+    coatColor: coatColor[getRandomFromArr(coatColor)],
+    eyesColor: eyesColor[getRandomFromArr(eyesColor)]
   });
 };
 
@@ -47,6 +47,8 @@ var setupClose = setup.querySelector('.setup-close');
 var userNameInput = setup.querySelector('.setup-user-name');
 var myWizard = document.querySelector('.setup-player');
 var myWizardCoat = myWizard.querySelector('.wizard-coat');
+var myWizardEyes = myWizard.querySelector('.wizard-eyes');
+var myWizardFierBall = myWizard.querySelector('.setup-fireball-wrap');
 // Валидация
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
@@ -66,6 +68,12 @@ userNameInput.addEventListener('input', function (evt) {
   } else {
     target.setCustomValidity('');
   }
+});
+userNameInput.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+userNameInput.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
 });
 // Работа с меню
 var ESC_KEY = 'Escape';
@@ -107,7 +115,18 @@ setupClose.addEventListener('keydown', function (evt) {
   }
 });
 // Работа с стилизацией мага
-var choseColor = getRandom(coatColor);
 myWizardCoat.addEventListener('click', function () {
-  myWizardCoat.style = 'fill: ' + coatColor[choseColor]; // вот тут я не совсем понял, как реализовать на каждый клик новый цвет. По сути в обработчик нельзя запихивать ссылки на функции из-вне иначе логика
+  var thisCoatColor = coatColor[getRandomFromArr(coatColor)];
+  myWizardCoat.style = 'fill:' + thisCoatColor;
+  myWizard.querySelector('[name="coat-color"]').value = thisCoatColor;
+});
+myWizardEyes.addEventListener('click', function () {
+  var thisEyesColor = eyesColor[getRandomFromArr(eyesColor)];
+  myWizardEyes.style = 'fill:' + thisEyesColor;
+  myWizard.querySelector('[name="eyes-color"]').value = thisEyesColor;
+});
+myWizardFierBall.addEventListener('click', function () {
+  var thisFierballColor = fierballColor[getRandomFromArr(fierballColor)];
+  myWizardFierBall.style = 'background-color:' + thisFierballColor;
+  myWizard.querySelector('[name="fireball-color"]').value = thisFierballColor;
 });
