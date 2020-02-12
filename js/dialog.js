@@ -1,7 +1,5 @@
 'use strict';
 (function () {
-  var TOP_COORD_FORM = 80;
-  var LEFT_COORD_FORM = 50;
   var ESC_KEY = 'Escape';
   var ENTER_KEY = 'Enter';
   var setup = document.querySelector('.setup');
@@ -14,8 +12,9 @@
   };
 
   var openPopup = function () {
-    setup.style.top = TOP_COORD_FORM + 'px';
-    setup.style.left = LEFT_COORD_FORM + '%';
+    if (setup.classList.contains('hidden')) {
+      setup.removeAttribute('style');
+    }
     setup.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
   };
