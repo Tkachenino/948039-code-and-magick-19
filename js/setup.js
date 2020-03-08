@@ -13,6 +13,7 @@
 
   var fragment = document.createDocumentFragment();
   var succsessHandler = function (data) {
+    window.dataFilter = data;
     data = data.slice(0, 4);
     data.forEach(function (item) {
       var element = renderWizard(item);
@@ -26,4 +27,7 @@
   window.load(succsessHandler, errorHandler);
 
   document.querySelector('.setup-similar').classList.remove('hidden');
+
+  window.renderWizard = renderWizard;
+  window.similarListElement = similarListElement;
 })();
