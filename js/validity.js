@@ -2,6 +2,7 @@
 (function () {
   var MIN_NAME_LENGTH = 2;
   var setup = document.querySelector('.setup');
+  var form = document.querySelector('.setup-wizard-form');
   var userNameInput = setup.querySelector('.setup-user-name');
 
   userNameInput.addEventListener('invalid', function () {
@@ -23,10 +24,23 @@
       target.setCustomValidity('');
     }
   });
+
   userNameInput.addEventListener('focus', function () {
     document.removeEventListener('keydown', window.dialog.onPopupEscPress);
   });
+
   userNameInput.addEventListener('blur', function () {
     document.addEventListener('keydown', window.dialog.onPopupEscPress);
+  });
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.save(new FormData(form),
+        function () {
+          document.querySelector('.setup').classList.add('hidden');
+        },
+        function () {
+          console.log('Ошибка отправки формы');
+        });
   });
 })();
