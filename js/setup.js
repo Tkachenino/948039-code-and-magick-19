@@ -22,7 +22,6 @@
   };
 
   var errorHandler = function () {
-    console.log('Сори ну у тебя ошибочка');
   };
   window.load(succsessHandler, errorHandler);
 

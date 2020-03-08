@@ -22,7 +22,7 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполнитлься за ' + xhr.timeout + 'ms, попробуйте снова')
+      onError('Запрос не успел выполнитлься за ' + xhr.timeout + 'ms, попробуйте снова');
     });
 
     xhr.timeout = 1000;

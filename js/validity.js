@@ -40,7 +40,6 @@
           document.querySelector('.setup').classList.add('hidden');
         },
         function () {
-          console.log('Ошибка отправки формы');
         });
   });
 })();
