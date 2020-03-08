@@ -3,9 +3,6 @@
   var uniqWizards = [];
   var form = document.querySelector('.setup-wizard-form');
   var myWizard = document.querySelector('.setup-player');
-  var myWizardCoat = myWizard.querySelector('.wizard-coat');
-  var myWizardEyes = myWizard.querySelector('.wizard-eyes');
-  var myWizardFierBall = myWizard.querySelector('.setup-fireball-wrap');
 
   var filterCoat = function (data) {
     return myWizard.querySelector('[name="coat-color"]').value === data.colorCoat;
@@ -19,7 +16,6 @@
     while (document.querySelector('.setup-similar-item')) {
       document.querySelector('.setup-similar-item').remove();
     }
-    console.log('check');
     uniqWizards = window.dataFilter
     .filter(filterCoat)
     .filter(filterEyes)
